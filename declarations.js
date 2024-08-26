@@ -6,7 +6,7 @@ const obj = Object.freeze({
     bool: false,
     undef: undefined
 })
-const nested = object.freeze({
+const nested = Object.freeze({
     arr: Object.freeze([4, undefined, '2']),
     obj: Object.freeze({
         str:'string',
