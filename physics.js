@@ -6,6 +6,6 @@ var getacceleration = (obj) => {
    } else if (typeof obj.t === 'number' && typeof obj.d === 'number' || obj.d !== 0) {
     return obj.d*obj.d/obj.t*obj.t;
    } else {
-    return "impossible"
+    return 'impossible'
    }
 }
