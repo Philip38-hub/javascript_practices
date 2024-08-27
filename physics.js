@@ -1,4 +1,4 @@
-var getacceleration = (obj) => {
+var getAcceleration = (obj) => {
    if (obj.f !== undefined && obj.m !== undefined || obj.m !== 0) {
     return obj.f/obj.m;
    } else if (obj.Δv !== undefined && obj.Δt !== undefined || obj.t !== 0) {
