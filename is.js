@@ -1,5 +1,5 @@
 const is = {}
-is.num = (value) => typeof value === 'number' && !isNaN(value);
+is.num = (value) => typeof value === 'number';
 
 // Check if the value is NaN (Not a Number)
 is.nan = (value) => Number.isNaN(value);
