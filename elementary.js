@@ -1,22 +1,17 @@
 const multiply = (a, b) => {
     let result = 0
-    if (b< 0) {
-        b = abs(b)
-        for (let i = 0; i < b; i++) {
-            result += a
-        }
-        result = -result
-    } else {
-        for (let i = 0; i < b; i++) {
-            result += a
-        }
-    } 
-    return result
+    var sign = b < 0 ? -1 : 1
+    var multiplier = abs(b)
+    for (let i = 0; i < multiplier; i++) {
+        result += a
+    }
+   return sign === -1 ? -result : result
 };
 
 var abs = (num) => num < 0 ? -num : num;
 
 const divide = (a, b) => {
+    if (b === 0) return 'error'
     let count = 0
     for (let i = a-b; i >= 0; i-=b) {
         count++
@@ -26,6 +21,10 @@ const divide = (a, b) => {
 
 const modulo = (a, b) => {
     let modulos = 0
+    if (b === 0) {
+        return
+    }
+
     for (let i = a; i >= 0; i-=b) {
         if (b > i) {
             modulos = i
