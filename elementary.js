@@ -11,26 +11,30 @@ const multiply = (a, b) => {
 var abs = (num) => num < 0 ? -num : num;
 
 const divide = (a, b) => {
-    if (b === 0) return 'error'
-    let count = 0
-    for (let i = a-b; i >= 0; i-=b) {
-        count++
+    if (b === 0) throw new Error("Division by zero is not allowed");
+    let result = 0;
+    const sign = (a < 0) === (b < 0) ? 1 : -1;
+    let dividend = Math.abs(a);
+    const divisor = Math.abs(b);
+
+    while (dividend >= divisor) {
+        dividend -= divisor;
+        result++;
     }
-    return count    
+
+    return sign * result;  
 }
 
 const modulo = (a, b) => {
-    let modulos = 0
-    if (b === 0) {
-        return
+    if (b === 0) throw new Error("Division by zero is not allowed");
+    const divisor = Math.abs(b);
+    let remainder = Math.abs(a);
+
+    while (remainder >= divisor) {
+        remainder -= divisor;
     }
 
-    for (let i = a; i >= 0; i-=b) {
-        if (b > i) {
-            modulos = i
-        }
-    }
-    return modulos
+    return a < 0 ? -remainder : remainder;
 }
 
 console.log(multiply(3, -2))
