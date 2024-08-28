@@ -34,7 +34,11 @@ const superTypeOf = (value) => {
     if (Array.isArray(value)) return 'Array';
     if (value instanceof Map) return 'Map';
     if (value instanceof Set) return 'Set'
-    return typeof value === 'object' ? 'object' : typeof value;
+    if (typeof value === 'number') return 'Number';
+    if (typeof value === 'string') return 'String';
+    if (typeof value === 'bool') return 'Boolean';
+    if (typeof value === 'object') return 'Object';
+    if (typeof value === 'function') return 'Function';
 }
 
 const str = 'hello'
