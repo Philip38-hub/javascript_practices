@@ -31,10 +31,10 @@ var strToObj = (str) => {
 const superTypeOf = (value) => {
     if (value === null) return 'null';
     if (value === undefined) return 'undefined'
-    if (Array.isArray(value)) return 'array';
+    if (Array.isArray(value)) return 'Array';
     if (value instanceof Map) return 'Map';
     if (value instanceof Set) return 'Set'
-    return typeof value === 'Object' ? 'Object' : typeof value;
+    return typeof value === 'object' ? 'object' : typeof value;
 }
 
 const str = 'hello'
