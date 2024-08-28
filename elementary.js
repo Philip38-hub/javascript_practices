@@ -22,7 +22,7 @@ const divide = (a, b) => {
         result++;
     }
 
-    return sign * result;  
+    return sign === -1 ? -result : result;  
 }
 
 const modulo = (a, b) => {
