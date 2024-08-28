@@ -1,5 +1,5 @@
 var arrToSet = (arr) => new Set(arr);
-var arrToStr = (arr) => arr.join(' ');
+var arrToStr = (arr) => arr.join('');
 var setToArr = (set) => Array.from(set);
 var setToStr = (set) => arrToStr(setToArr(set));
 var strToArr = (str) => str.split('');
