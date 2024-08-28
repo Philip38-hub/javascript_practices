@@ -1,10 +1,20 @@
 const multiply = (a, b) => {
     let result = 0
-    for (let i = 0; i < b; i++) {
-        result += a
-    }
+    if (b< 0) {
+        b = abs(b)
+        for (let i = 0; i < b; i++) {
+            result += a
+        }
+        result = -result
+    } else {
+        for (let i = 0; i < b; i++) {
+            result += a
+        }
+    } 
     return result
 };
+
+var abs = (num) => num < 0 ? -num : num;
 
 const divide = (a, b) => {
     let count = 0
@@ -24,6 +34,6 @@ const modulo = (a, b) => {
     return modulos
 }
 
-// console.log(multiply(3, 2))
-// console.log(divide(3, 2))
-// console.log(modulo(10, 2))
+console.log(multiply(3, -2))
+console.log(divide(3, 2))
+console.log(modulo(10, 2))
