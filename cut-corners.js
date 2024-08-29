@@ -27,11 +27,13 @@ const round = (n) => {
 }
 
 const ceil = (n) => {
+    if (n === 0) return 0
    let num = multiply(n, 10);
    return n < 0 ? divide(num, 10) : divide(num, 10) + 1;
 }
 
 const floor = (n) => {
+    if (n === 0) return 0
     let num = multiply(n, 10);
     return n > 0 ? divide(num, 10) : divide(num, 10) -1;
 }
