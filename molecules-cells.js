@@ -1,4 +1,7 @@
-const rna = (str) =>{
+const RNA = (str) =>{
+    if (str.length === 0) {
+        return '';
+    }
     str.toUpperCase();
     var result = '';
     for (let i = 0; i < str.length; i++) {
@@ -16,7 +19,10 @@ const rna = (str) =>{
     
 }
 
-const dna = (str) => {
+const DNA = (str) => {
+    if (str.length === 0) {
+        return '';
+    }
     str.toUpperCase();
     var result = '';
     for (let i = 0; i < str.length; i++) {
