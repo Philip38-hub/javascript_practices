@@ -8,7 +8,7 @@ const ceil = (n) => {
 }
 
 const floor = (n) => {
-    if (n===(n | 0)) return n;
+    if (Number.isInteger(n)) return n;
     return n > 0 ? parseInt(n) : parseInt(n) - 1;
 }
 
