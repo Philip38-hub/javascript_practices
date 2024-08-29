@@ -36,6 +36,12 @@
 const split = (str, sep) => {
     let result = [];
     let current = '';
+    if (sep === '') {
+        for (let i = 0; i < str.length; i++) {
+            result.push(str[i])
+        }
+        return result
+    }
 
     for (let i = 0; i < str.length; i++) {
         if (sep.length > 1) {
@@ -72,6 +78,7 @@ const join = (arr, sep) => {
     return result
 }
 
-// console.log(split('ee,ff,g,', ','))
-// console.log(split('rrrr', 'rr'))
-// console.log(split('ggg - ddd - b', ' - '))
+console.log(split('ee,ff,g,', ','))
+console.log(split('rrrr', 'rr'))
+console.log(split('ggg - ddd - b', ' - '))
+console.log(split('Riad', ''))
