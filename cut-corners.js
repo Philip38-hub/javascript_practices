@@ -1,51 +1,47 @@
-const multiply = (a, b) => {
-    let result = 0
-    var sign = b < 0 ? -1 : 1
-    var multiplier = abs(b)
-    for (let i = 0; i < multiplier; i++) {
-        result += a
+function trunc(num) {
+    if (num < 0) {
+        return -trunc(-num);
     }
-   return sign === -1 ? -result : result
-};
-const divide = (a, b) => {
-    if (b === 0) return
+
     let result = 0;
-    const sign = (a < 0) === (b < 0) ? 1 : -1;
-    let dividend = abs(a);
-    const divisor = abs(b);
+    let power = 1;
 
-    while (dividend >= divisor) {
-        dividend -= divisor;
-        result++;
+    while (power * 10 <= num) {
+        power *= 10;
     }
 
-    return sign === -1 ? -result : result;  
-}
-var abs = (num) => num < 0 ? -num : num;
-const round = (n) => {
-    return n < 0 ? ceil(n-0.5) : floor(n+0.5); 
-}
+    while (power >= 1) {
+        while (result + power <= num) {
+            result += power;
+        }
+        power /= 10;
+    }
 
-const ceil = (n) => {
-    if (n === Infinity) return Infinity
-    if (n === -Infinity) return -Infinity
-    if (n === 0) return 0
-   let num = multiply(n, 10);
-   return n < 0 ? divide(num, 10) : divide(num, 10) + 1;
+    return result;
 }
 
-const floor = (n) => {
-    if (n === Infinity) return Infinity
-    if (n === -Infinity) return -Infinity
-    if (n === 0) return 0
-    let num = multiply(n, 10);
-    return n > 0 ? divide(num, 10) : divide(num, 10) -1;
+function round(num) {
+    if (num < 0) {
+        return -trunc(-num + 0.5); 
+    } else {
+        return trunc(num + 0.5); 
+    }
 }
 
-const trunc = (n) => n < 0 ? ceil(n) : floor(n);
+function floor(num) {
+    if (num < 0 && num !== trunc(num)) {
+        return trunc(num) - 1; 
+    }
+    return trunc(num); 
+}
 
-// const nums = [3.7, -3.7, 3.1, -3.1]
-// console.log(nums.map(round))
-// console.log(nums.map(floor))
-// console.log(nums.map(trunc))
-// console.log(nums.map(ceil))
+function ceil(num) {
+    if (num < 0) {
+        return trunc(num); 
+    } else {
+        if (num !== trunc(num)) {
+            return trunc(num) + 1; 
+        }
+    }
+    return trunc(num);
+}
