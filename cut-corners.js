@@ -4,12 +4,12 @@ const round = (n) => {
 
 const ceil = (n) => {
     if (Number.isInteger(n)) return n;
-    return n > 0 ? parseInt(n) + 1 : parseInt(n);
+    return n > 0 ? Number.toFixed(n) + 1 : Number.toFixed(n);
 }
 
 const floor = (n) => {
     if (Number.isInteger(n)) return n;
-    return n > 0 ? parseInt(n) : parseInt(n) - 1;
+    return n > 0 ? Number.toFixed(n) : Number.toFixed(n) - 1;
 }
 
 const trunc = (n) => n < 0 ? ceil(n) : floor(n);
