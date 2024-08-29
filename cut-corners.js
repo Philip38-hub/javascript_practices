@@ -26,35 +26,26 @@ const round = (n) => {
     return n < 0 ? ceil(n-0.5) : floor(n+0.5); 
 }
 
-// const ceil = (n) => {
-//     if (n === 0) return 0
-//    let num = multiply(n, 10);
-//    return n < 0 ? divide(num, 10) : divide(num, 10) + 1;
-// }
-
-// const floor = (n) => {
-//     if (n === 0) return 0
-//     let num = multiply(n, 10);
-//     return n > 0 ? divide(num, 10) : divide(num, 10) -1;
-// }
 const ceil = (n) => {
+    if (n === Infinity) return Infinity
+    if (n === -Infinity) return -Infinity
     if (n === 0) return 0
-    const num = multiply(n, 10);
-    const divided = divide(num, 10);
-    return n < 0 ? divided : divided + (divided === num ? 0 : 1);
+   let num = multiply(n, 10);
+   return n < 0 ? divide(num, 10) : divide(num, 10) + 1;
 }
 
 const floor = (n) => {
+    if (n === Infinity) return Infinity
+    if (n === -Infinity) return -Infinity
     if (n === 0) return 0
-    const num = multiply(n, 10);
-    const divided = divide(num, 10);
-    return n > 0 ? divided : divided - (divided === num ? 0 : 1);
+    let num = multiply(n, 10);
+    return n > 0 ? divide(num, 10) : divide(num, 10) -1;
 }
 
 const trunc = (n) => n < 0 ? ceil(n) : floor(n);
 
-// const nums = [3.7, -3.7, 3.1, -3.1]
-// console.log(nums.map(round))
-// console.log(nums.map(floor))
-// console.log(nums.map(trunc))
-// console.log(nums.map(ceil))
+const nums = [3.7, -3.7, 3.1, -3.1]
+console.log(nums.map(round))
+console.log(nums.map(floor))
+console.log(nums.map(trunc))
+console.log(nums.map(ceil))
