@@ -8,7 +8,7 @@ const multiply = (a, b) => {
    return sign === -1 ? -result : result
 };
 const divide = (a, b) => {
-    if (b === 0) throw new Error("Division by zero is not allowed");
+    if (b === 0) return
     let result = 0;
     const sign = (a < 0) === (b < 0) ? 1 : -1;
     let dividend = abs(a);
