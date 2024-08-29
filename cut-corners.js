@@ -44,8 +44,8 @@ const floor = (n) => {
 
 const trunc = (n) => n < 0 ? ceil(n) : floor(n);
 
-const nums = [3.7, -3.7, 3.1, -3.1]
-console.log(nums.map(round))
-console.log(nums.map(floor))
-console.log(nums.map(trunc))
-console.log(nums.map(ceil))
+// const nums = [3.7, -3.7, 3.1, -3.1]
+// console.log(nums.map(round))
+// console.log(nums.map(floor))
+// console.log(nums.map(trunc))
+// console.log(nums.map(ceil))
