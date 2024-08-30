@@ -1,7 +1,7 @@
 const pyramid = (str, num) => {
     var result = '';
     for (let i = 1; i <= num; i++) {
-        for (let j = num-i; j >= 0; j--) {
+        for (let j = num-i; j > 0; j--) {
             result += ' '.repeat(str.length)
         }
        let k = 2*i-1
@@ -15,4 +15,4 @@ const pyramid = (str, num) => {
     return result
 }
 
-// console.log(pyramid('pk', 5))
+// console.log(pyramid('a', 5))
