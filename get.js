@@ -1,11 +1,20 @@
 const get = (src, path) => {
-    const values = path.split('.');
-    if (src[values[0]] === undefined) return undefined
-    if (values.length === 1) return src[values[0]]
-    if (values.length === 2) return src[values[0]][values[1]]
-    if (values.length === 3) return src[values[0]][values[1]][values[2]]
-}
+    // Split the path by the dot to get the keys
+    const keys = path.split('.');
 
-// const src = { a: [{ b: t }] } 
-// const path = 'a.0.b.toString'
-// console.log(get(src, path)) // -> 'peekaboo'
+    // Traverse the src object using the keys
+    let result = src;
+    for (let key of keys) {
+        if (result === undefined || result === null) {
+            return undefined; // If any part of the path is undefined or null, return undefined
+        }
+        result = result[key];   
+    }
+
+    return result;
+};
+
+const src = { nested: { key: 'peekaboo' } }
+const path = 'nested.key'
+console.log(get(src, path)) // -> 'peekaboo'
+
