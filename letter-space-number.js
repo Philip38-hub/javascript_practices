@@ -1,5 +1,5 @@
 const letterSpaceNumber = (str) => {
-    return str.match(/[a-zA-Z]\s\d(?!\d)/g) || [];
+    return str.match(/[a-zA-Z]\s\d(?!\w)/g) || [];
 }
 
-console.log(letterSpaceNumber('example 1, example 20'))
+console.log(letterSpaceNumber('I like 7up.'))
