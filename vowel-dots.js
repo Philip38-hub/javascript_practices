@@ -1,8 +1,8 @@
+let vowels = /[aeiou]/i
 const vowelDots = (str) => {
     if (str.length === 0) {
         return '';
     }
-    let vowels = /[aeiou]/i
     let result = ''
     for (let i = 0; i < str.length; i++) {
         result += str[i]
