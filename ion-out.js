@@ -1,5 +1,5 @@
 var ionOut = (str) => {
-    const words = str.split(', ');
+    const words = str.includes(',') ? str.split(', ') : str.split(' ');
     const result = [];
     words.forEach(word => {
         const match = /(?<=t)ion/.test(word);
