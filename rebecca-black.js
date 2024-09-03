@@ -1,4 +1,4 @@
-const isFriday = (date) => date.getDay() === 4;
+const isFriday = (date) => date.getDay() === 5;
 const isWeekend = (date) => date.getDay() === 0 || date.getDay() === 6;
 const isLeapYear = (date) => {
     const year = date.getYear();
