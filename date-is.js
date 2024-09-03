@@ -1,5 +1,5 @@
 const isValid = (date) => {
-    if (date.toString() === 'Invalid Date') {
+    if (date.toString() === 'Invalid Date' || date === "") {
         return false
     }
     return true
@@ -34,4 +34,4 @@ const isPast = (date) => {
     return false
 }
 
-console.log(isPast(new Date('December 7, 195gf 03:24:01')))
+console.log(isValid(""))
