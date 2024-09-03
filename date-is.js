@@ -1,5 +1,5 @@
 const isValid = (date) => {
-    if (date.toString() === 'Invalid Date' || typeof date === 'string') {
+    if (date.toString() === 'Invalid Date' || !(date instanceof Date)) {
         return false
     }
     return true
