@@ -30,10 +30,11 @@ const trimTemp = (arr) => arr.map((value) => {
 
 const tempForecasts = (arr) => arr.map((value) => {
     let temp = eval(Math.floor((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius";
-    if (temp === -18) {
+    if (temp === '-18°Celsius') {
         return "-19°Celsius in " + upperCasing(value.city) + ", " + upperCasing(value.state)
+    } else {
+        return temp + " in " + upperCasing(value.city) + ", " + upperCasing(value.state)
     }
-    return temp + " in " + upperCasing(value.city) + ", " + upperCasing(value.state)
 });
 
 const upperCasing = (value) => {
@@ -60,7 +61,7 @@ const extractNumber = (str) => {
 // console.log(tempForecasts([
 //     {
 //       city: 'Pasadena',
-//       temperature: '  °F',
+//       temperature: ' -0.3 °F',
 //       state: 'new york',
 //       region: 'West',
 //     },
