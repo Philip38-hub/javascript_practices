@@ -19,8 +19,8 @@ function filter1DistinctVowel(strs) {
       const vowelSet = new Set();
   
       for (let char of str) {
-        if (vowels.includes(char.tolowerCase())) {
-          vowelSet.add(char.tolowerCase());
+        if (vowels.includes(char.toLowerCase())) {
+          vowelSet.add(char.toLowerCase());
         }
       }
   
