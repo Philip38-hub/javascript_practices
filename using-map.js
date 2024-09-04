@@ -24,7 +24,7 @@ const fahrenheitToCelsius = (arr) => arr.map((value) => {
 const trimTemp = (arr) => arr.map((value) => {
     return {
         ...value,
-        temperature: value.temperature.trim()
+        temperature: value.temperature.replace(/\s+/gm,"")
     };
 });
 
@@ -43,12 +43,7 @@ const extractNumber = (str) => {
     return match ? match[0] : null;
 };
 
-console.log(upperCasingStates(['Alabama',
-'New Jersey',
-'Alaska',
-'New York',
-'California',
-'New Hampshire',
-'Ohio',
-'Texas',
-'West Virginia',]))
+console.log(trimTemp([
+    { city: 'Los Angeles', temperature: '  101 °F   ' },
+    { city: 'San Francisco', temperature: ' 84 ° F   ' },
+  ]))
