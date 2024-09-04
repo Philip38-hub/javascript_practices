@@ -3,7 +3,15 @@ const citiesOnly = (arr) => arr.map((value) => {
 })
 
 const upperCasingStates = (arr) => arr.map((value) => {
-    return value[0].toUpperCase()+value.slice(1)
+    let result = ""
+    for (let i = 0; i < value.length; i++) {
+        if (i === 0 || (i>0 && value[i-1] === ' ')) {
+            result += value[i].toUpperCase()
+        } else {
+            result += value[i].toLowerCase()
+        } 
+    }
+    return result
 })
 
 const fahrenheitToCelsius = (arr) => arr.map((value) => {
@@ -35,4 +43,12 @@ const extractNumber = (str) => {
     return match ? match[0] : null;
 };
 
-console.log(fahrenheitToCelsius(['32°F', '59°F', '25°F']))
+console.log(upperCasingStates(['Alabama',
+'New Jersey',
+'Alaska',
+'New York',
+'California',
+'New Hampshire',
+'Ohio',
+'Texas',
+'West Virginia',]))
