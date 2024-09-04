@@ -4,7 +4,7 @@ const filter5Vowels = (arr) => {
     return arr.filter(str => {
         const vowels = ['a', 'e', 'i', 'o', 'u'];
         let vowelCount = 0;
-        for (char in str) {
+        for (let char of str) {
             if (vowels.includes(char)) {
                 vowelCount++
             }
