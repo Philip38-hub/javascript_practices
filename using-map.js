@@ -1,64 +1,32 @@
-const citiesOnly = (arr) => arr.map((value) => {
-    return value.city
-})
-
-const upperCasingStates = (arr) => arr.map((value) => {
-    let result = ""
-    for (let i = 0; i < value.length; i++) {
-        if (i === 0 || (i>0 && value[i-1] === ' ')) {
-            result += value[i].toUpperCase()
-        } else {
-            result += value[i].toLowerCase()
-        } 
-    }
-    return result
-})
-
-const fahrenheitToCelsius = (arr) => arr.map((value) => {
-    let cel = eval(Math.floor((value.slice(0, -2) - 32) * 5 / 9))
-    if (typeof cel === 'number') {
-        return cel + "°C"
-    }
-})
-
-const trimTemp = (arr) => arr.map((value) => {
-    return {
-        ...value,
-        temperature: value.temperature.replace(/\s+/gm,"")
-    };
-});
-
-const tempForecasts = (arr) => arr.map((value) => {
-    let temp = eval(Math.ceil((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius";
-    return temp + " in " + upperCasing(value.city) + ", " + upperCasing(value.state)
-});
-
-const upperCasing = (value) => {
-    let result = ""
-    for (let i = 0; i < value.length; i++) {
-        if (i === 0 || (i>0 && value[i-1] === ' ')) {
-            result += value[i].toUpperCase()
-        } else {
-            result += value[i].toLowerCase()
-        } 
-    }
-    return result
-}
-
-
-const extractNumber = (str) => {
-    if (typeof str !== 'string') {
-        return null;
-    }
-    const match = str.match(/\d+/);
-    return match ? match[0] : null;
-};
-
-console.log(tempForecasts([
-    {
-      city: 'Pasadena',
-      temperature: ' 18 °F',
-      state: 'new york',
-      region: 'West',
-    },
-]))
+const citiesOnly = (arr) => {
+    return arr.map(({ city }) => city);
+  }
+  const upperCasingStates = (arr) => {
+    return arr.map((state) =>
+      state.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
+    );
+  };
+  const fahrenheitToCelsius = (arr) => {
+    return arr.map(temp => {
+      const fahrenheit = parseFloat(temp);
+      const celsius = Math.floor((fahrenheit - 32) * 5 / 9);
+      return `${celsius}°C`;
+    });
+  };
+  
+  const tempForecasts = (arr) => {
+    return arr.map(({ city, temperature, state }) => {
+      let temp = fahrenheitToCelsius([temperature])
+      let finalCity = upperCasingStates([city])
+      let finalState = upperCasingStates([state])
+  
+      return `${temp}elsius in ${finalCity}, ${finalState}`
+    });
+  }
+  
+  const trimTemp = (arr) => {
+    return arr.map(obj => ({
+      ...obj,
+      temperature: obj.temperature.trim().replace(/\s*°\s*F/, '°F')
+    }));
+  };
