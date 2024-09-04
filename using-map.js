@@ -29,7 +29,7 @@ const trimTemp = (arr) => arr.map((value) => {
 });
 
 const tempForecasts = (arr) => arr.map((value) => {
-    let temp = eval(Math.round((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius";
+    let temp = eval(Math.ceil((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius";
     return temp + " in " + upperCasing(value.city) + ", " + upperCasing(value.state)
 });
 
@@ -54,11 +54,11 @@ const extractNumber = (str) => {
     return match ? match[0] : null;
 };
 
-// console.log(tempForecasts([
-//     {
-//       city: 'Pasadena',
-//       temperature: ' -0.3 °F',
-//       state: 'new york',
-//       region: 'West',
-//     },
-// ]))
+console.log(tempForecasts([
+    {
+      city: 'Pasadena',
+      temperature: ' 18 °F',
+      state: 'new york',
+      region: 'West',
+    },
+]))
