@@ -1,5 +1,5 @@
 const filterShortStateName = (arr) => arr.filter((str) => str.length < 7);
-const filterStartVowel = (arr) => arr.filter((str) => str.test(/^[aeiou]/i));
+const filterStartVowel = (arr) => arr.filter((str) => /^[aeiou]/i.test(str));
 const filter5Vowels = (arr) => {
     return arr.filter(str => {
         const vowels = ['a', 'e', 'i', 'o', 'u'];
