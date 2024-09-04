@@ -29,11 +29,22 @@ const trimTemp = (arr) => arr.map((value) => {
 });
 
 const tempForecasts = (arr) => arr.map((value) => {
-    let temp = eval(Math.floor((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius"
-    let cty = value.city[0].toUpperCase() + value.city.slice(1)
-    let country = value.state[0].toUpperCase() + value.state.slice(1)
-    return temp + " in " + cty + ", " + country
+    let temp = eval(Math.floor((extractNumber(value.temperature.replace(/^\s+|\s+$/gm,''))-32) * 5/9)) + "°Celsius";
+    return temp + " in " + upperCasing(value.city) + ", " + upperCasing(value.state)
 });
+
+const upperCasing = (value) => {
+    let result = ""
+    for (let i = 0; i < value.length; i++) {
+        if (i === 0 || (i>0 && value[i-1] === ' ')) {
+            result += value[i].toUpperCase()
+        } else {
+            result += value[i].toLowerCase()
+        } 
+    }
+    return result
+}
+
 
 const extractNumber = (str) => {
     if (typeof str !== 'string') {
@@ -43,7 +54,11 @@ const extractNumber = (str) => {
     return match ? match[0] : null;
 };
 
-console.log(trimTemp([
-    { city: 'Los Angeles', temperature: '  101 °F   ' },
-    { city: 'San Francisco', temperature: ' 84 ° F   ' },
-  ]))
+// console.log(tempForecasts([
+//     {
+//       city: 'Pasadena',
+//       temperature: ' 101 °F',
+//       state: 'new york',
+//       region: 'West',
+//     },
+// ]))
