@@ -1,40 +1,60 @@
-export const build = (numberOfBricks) => {
-    let brickCount = 0;
-    const interval = setInterval(() => {
-        brickCount++;
-        const brick = document.createElement('div');
-        brick.id = `brick-${brickCount}`;
-        document.body.appendChild(brick)
-   
-        if (brickCount % 3 === 2) {
-            brick.dataset.foundation = 'true';
-        } else {
-            brick.dataset.foundation = 'false';
-        }
+let brickCount = 0;
 
-        if (brickCount >= numberOfBricks) {
+// Function to build the tower with a specified number of bricks
+export const build = (numBricks) => {
+    const leftColumn = document.querySelector('.left');
+    const middleColumn = document.querySelector('.middle');
+    const rightColumn = document.querySelector('.right');
+    
+    const interval = setInterval(() => {
+        if (brickCount >= numBricks) {
             clearInterval(interval);
+            return;
         }
-    }, 100);
+        
+        // Create a new brick element
+        const brick = document.createElement('div');
+        brickCount++;
+        brick.id = `brick-${brickCount}`;
+        
+        // Distribute bricks into the three columns
+        if (brickCount % 3 === 1) {
+            leftColumn.appendChild(brick);
+        } else if (brickCount % 3 === 2) {
+            brick.setAttribute('data-foundation', 'true');  // Add the foundation attribute
+            middleColumn.appendChild(brick);
+        } else {
+            rightColumn.appendChild(brick);
+        }
+    }, 100); // Adds a brick every 100ms
 };
 
-export const repair = (...ids) => {
-    ids.forEach(id => {
+// Function to repair specific bricks by id
+export const repair = (...brickIds) => {
+    brickIds.forEach((id) => {
         const brick = document.getElementById(id);
-        if (brick){
-            if (brick.dataset.foundation === 'true') {
-                brick.dataset.repaired = 'inprogress';
+        if (brick) {
+            // Check if it's in the middle column
+            if (brick.parentElement.classList.contains('middle')) {
+                brick.setAttribute('repaired', 'in progress');
             } else {
-                brick.dataset.repaired = 'true';
+                brick.setAttribute('repaired', 'true');
             }
         }
-
     });
-}
+};
 
+// Function to destroy the last brick
 export const destroy = () => {
-    const bricks = document.querySelectorAll('div[id^="brick-"]');
-    if (bricks.length){
-        bricks[bricks.length - 1].remove();
+    const columns = [document.querySelector('.left'), document.querySelector('.middle'), document.querySelector('.right')];
+    // Check all columns from right to left
+    for (let i = columns.length - 1; i >= 0; i--) {
+        const column = columns[i];
+        const lastBrick = column.lastElementChild;
+        if (lastBrick) {
+            column.removeChild(lastBrick);
+            brickCount--;
+            break;
+        }
     }
 };
