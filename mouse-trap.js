@@ -12,8 +12,8 @@ export const createCircle = () => {
     // Set its position
     const radius = 25;
     circle.style.position = 'absolute';
-    circle.style.left = `${event.clientX - radius}px`; // Adjust to center the circle
-    circle.style.top = `${event.clientY - radius}px`; // Adjust to center the circle
+    circle.style.left = `${event.clientX - radius}px`;
+    circle.style.top = `${event.clientY - radius}px`;
 
     // Set size of the circle
     circle.style.width = `${2 * radius}px`;
@@ -42,19 +42,20 @@ export const moveCircle = () => {
         const boxRect = box.getBoundingClientRect();
         const circleRect = lastCircle.getBoundingClientRect();
 
-        const isInsideX = circleRect.left >= boxRect.left + 1 &&
-                          circleRect.right <= boxRect.right - 1;
-        const isInsideY = circleRect.top >= boxRect.top + 1 &&
-                          circleRect.bottom <= boxRect.bottom - 1;
+        const isInsideX = circleRect.left >= boxRect.left &&
+                          circleRect.right <= boxRect.right;
+        const isInsideY = circleRect.top >= boxRect.top &&
+                          circleRect.bottom <= boxRect.bottom;
 
         if (isInsideX && isInsideY) {
           lastCircle.style.backgroundColor = 'var(--purple)';
-          // Ensure the circle stays within the box
-          x = Math.max(boxRect.left + radius, Math.min(x, boxRect.right - radius));
-          y = Math.max(boxRect.top + radius, Math.min(y, boxRect.bottom - radius));
         } else {
           lastCircle.style.backgroundColor = 'white';
         }
+
+        // Ensure the circle stays within the box
+        x = Math.max(boxRect.left + radius, Math.min(x, boxRect.right - radius));
+        y = Math.max(boxRect.top + radius, Math.min(y, boxRect.bottom - radius));
       }
 
       // Update the circle's position
