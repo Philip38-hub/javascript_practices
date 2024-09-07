@@ -37,6 +37,9 @@ export const moveCircle = () => {
       let x = event.clientX - radius;
       let y = event.clientY - radius;
 
+      // Update the circle's position
+      lastCircle.style.left = `${x}px`;
+      lastCircle.style.top = `${y}px`;
       // Check if the circle is inside the box
       if (box) {
         const boxRect = box.getBoundingClientRect();
@@ -58,9 +61,7 @@ export const moveCircle = () => {
         y = Math.max(boxRect.top + radius, Math.min(y, boxRect.bottom - radius));
       }
 
-      // Update the circle's position
-      lastCircle.style.left = `${x}px`;
-      lastCircle.style.top = `${y}px`;
+      
     }
   });
 };
