@@ -1,75 +1,84 @@
-export const pick = () => {
-    // Create and style the HSL display elements
-    const hslDiv = document.createElement('div');
-    const hueDiv = document.createElement('div');
-    const luminosityDiv = document.createElement('div');
-  
-    hslDiv.className = 'hsl';
-    hueDiv.className = 'hue';
-    luminosityDiv.className = 'luminosity';
-  
-    document.body.appendChild(hslDiv);
-    document.body.appendChild(hueDiv);
-    document.body.appendChild(luminosityDiv);
-  
-    // Create and style the SVG container and lines
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("width", "100%");
-    svg.setAttribute("height", "100%");
+export function pick() {
+    // Create the HSL display div
+    const hslDisplay = document.createElement('div');
+    hslDisplay.className = 'hsl';
+    hslDisplay.style.position = 'absolute';
+    hslDisplay.style.top = '50%';
+    hslDisplay.style.left = '50%';
+    hslDisplay.style.transform = 'translate(-50%, -50%)';
+    hslDisplay.style.fontSize = '2em';
+    document.body.appendChild(hslDisplay);
+
+    // Create the Hue display div
+    const hueDisplay = document.createElement('div');
+    hueDisplay.className = 'hue';
+    hueDisplay.style.position = 'absolute';
+    hueDisplay.style.top = '10px';
+    hueDisplay.style.right = '10px';
+    hueDisplay.style.fontSize = '1.5em';
+    document.body.appendChild(hueDisplay);
+
+    // Create the Luminosity display div
+    const luminosityDisplay = document.createElement('div');
+    luminosityDisplay.className = 'luminosity';
+    luminosityDisplay.style.position = 'absolute';
+    luminosityDisplay.style.bottom = '10px';
+    luminosityDisplay.style.left = '10px';
+    luminosityDisplay.style.fontSize = '1.5em';
+    document.body.appendChild(luminosityDisplay);
+
+    // Create the SVG for crosshairs
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.style.position = 'absolute';
-    svg.style.top = '0';
-    svg.style.left = '0';
-    svg.style.pointerEvents = 'none'; // Ensure SVG does not capture mouse events
+    svg.style.pointerEvents = 'none'; // Prevent mouse events on the SVG
     document.body.appendChild(svg);
-  
-    const lineX = document.createElementNS(svgNS, "line");
-    const lineY = document.createElementNS(svgNS, "line");
-  
-    lineX.setAttribute("id", "axisX");
-    lineY.setAttribute("id", "axisY");
-  
-    lineX.setAttribute("stroke", "black");
-    lineY.setAttribute("stroke", "black");
-    lineX.setAttribute("stroke-width", "1");
-    lineY.setAttribute("stroke-width", "1");
-  
+
+    const lineX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    lineX.setAttribute('id', 'axisX');
+    lineX.setAttribute('stroke', 'black');
+    lineX.setAttribute('stroke-width', '1');
     svg.appendChild(lineX);
+
+    const lineY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    lineY.setAttribute('id', 'axisY');
+    lineY.setAttribute('stroke', 'black');
+    lineY.setAttribute('stroke-width', '1');
     svg.appendChild(lineY);
-  
-    // Function to update HSL values and SVG lines based on mouse position
-    const updateValues = (event) => {
-      const hue = Math.round((event.clientX / window.innerWidth) * 360);
-      const luminosity = Math.round((event.clientY / window.innerHeight) * 100);
-      const hslValue = `hsl(${hue}, 50%, ${luminosity}%)`;
-  
-      document.body.style.backgroundColor = hslValue;
-  
-      hslDiv.textContent = `HSL: ${hslValue}`;
-      hueDiv.textContent = `Hue: ${hue}`;
-      luminosityDiv.textContent = `Luminosity: ${luminosity}`;
-  
-      lineX.setAttribute('x1', event.clientX);
-      lineX.setAttribute('x2', event.clientX);
-      lineX.setAttribute('y1', 0);
-      lineX.setAttribute('y2', window.innerHeight);
-  
-      lineY.setAttribute('x1', 0);
-      lineY.setAttribute('x2', window.innerWidth);
-      lineY.setAttribute('y1', event.clientY);
-      lineY.setAttribute('y2', event.clientY);
-    };
-  
-    // Add event listeners for mouse movement and click
-    document.addEventListener('mousemove', updateValues);
-    
-    document.addEventListener('click', () => {
-      const hslText = document.querySelector('.hsl').textContent;
-      navigator.clipboard.writeText(hslText).then(() => {
-        console.log('HSL value copied to clipboard');
-      }).catch(err => {
-        console.error('Failed to copy HSL value: ', err);
-      });
+
+    // Mouse move event
+    document.addEventListener('mousemove', (event) => {
+        const hue = Math.round((event.clientX / window.innerWidth) * 360);
+        const luminosity = Math.round((1 - (event.clientY / window.innerHeight)) * 100);
+
+        // Update background color
+        document.body.style.backgroundColor = `hsl(${hue}, 100%, ${luminosity}%)`;
+
+        // Update displays
+        const hslValue = `hsl(${hue}, 100%, ${luminosity}%)`;
+        hslDisplay.textContent = hslValue;
+        hueDisplay.textContent = `Hue: ${hue}`;
+        luminosityDisplay.textContent = `Luminosity: ${luminosity}`;
+
+        // Update line positions
+        lineX.setAttribute('x1', event.clientX);
+        lineX.setAttribute('x2', event.clientX);
+        lineX.setAttribute('y1', 0);
+        lineX.setAttribute('y2', window.innerHeight);
+
+        lineY.setAttribute('y1', event.clientY);
+        lineY.setAttribute('y2', event.clientY);
+        lineY.setAttribute('x1', 0);
+        lineY.setAttribute('x2', window.innerWidth);
     });
-  };
-  
+
+    // Mouse click event to copy HSL value to clipboard
+    document.addEventListener('click', () => {
+        navigator.clipboard.writeText(hslDisplay.textContent)
+            .then(() => {
+                console.log('HSL value copied to clipboard:', hslDisplay.textContent);
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    });
+}
