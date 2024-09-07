@@ -64,7 +64,8 @@ export const pick = () => {
     document.addEventListener('mousemove', updateValues);
     
     document.addEventListener('click', () => {
-      navigator.clipboard.writeText(hslDiv.textContent).then(() => {
+      const hslText = document.querySelector('.hsl').textContent;
+      navigator.clipboard.writeText(hslText).then(() => {
         console.log('HSL value copied to clipboard');
       }).catch(err => {
         console.error('Failed to copy HSL value: ', err);
