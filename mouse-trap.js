@@ -10,13 +10,14 @@ export const createCircle = () => {
     circle.style.backgroundColor = 'white';
 
     // Set its position
+    const radius = 25;
     circle.style.position = 'absolute';
-    circle.style.left = `${event.clientX - 25}px`; // Adjust to center the circle
-    circle.style.top = `${event.clientY - 25}px`; // Adjust to center the circle
+    circle.style.left = `${event.clientX - radius}px`; // Adjust to center the circle
+    circle.style.top = `${event.clientY - radius}px`; // Adjust to center the circle
 
     // Set size of the circle
-    circle.style.width = '50px';
-    circle.style.height = '50px';
+    circle.style.width = `${2 * radius}px`;
+    circle.style.height = `${2 * radius}px`;
     circle.style.borderRadius = '50%';
     
     // Add the circle to the body
@@ -24,9 +25,6 @@ export const createCircle = () => {
 
     // Keep track of the last created circle
     lastCircle = circle;
-
-    // Initialize circle movement
-    moveCircle();
   });
 };
 
@@ -35,21 +33,33 @@ export const moveCircle = () => {
   document.addEventListener('mousemove', (event) => {
     if (lastCircle) {
       // Get the mouse position
-      const x = event.clientX - 25; // Adjust to center the circle
-      const y = event.clientY - 25; // Adjust to center the circle
+      const radius = 25;
+      let x = event.clientX - radius;
+      let y = event.clientY - radius;
+
+      // Check if the circle is inside the box
+      if (box) {
+        const boxRect = box.getBoundingClientRect();
+        const circleRect = lastCircle.getBoundingClientRect();
+
+        const isInsideX = circleRect.left >= boxRect.left + 1 &&
+                          circleRect.right <= boxRect.right - 1;
+        const isInsideY = circleRect.top >= boxRect.top + 1 &&
+                          circleRect.bottom <= boxRect.bottom - 1;
+
+        if (isInsideX && isInsideY) {
+          lastCircle.style.backgroundColor = 'var(--purple)';
+          // Ensure the circle stays within the box
+          x = Math.max(boxRect.left + radius, Math.min(x, boxRect.right - radius));
+          y = Math.max(boxRect.top + radius, Math.min(y, boxRect.bottom - radius));
+        } else {
+          lastCircle.style.backgroundColor = 'white';
+        }
+      }
 
       // Update the circle's position
       lastCircle.style.left = `${x}px`;
       lastCircle.style.top = `${y}px`;
-
-      // Check if the circle is inside the box
-      if (box && isInsideBox(lastCircle, box)) {
-        lastCircle.style.backgroundColor = 'var(--purple)';
-        // Prevent the circle from escaping
-        lastCircle.style.pointerEvents = 'none'; 
-      } else {
-        lastCircle.style.backgroundColor = 'white';
-      }
     }
   });
 };
@@ -70,17 +80,4 @@ export const setBox = () => {
   box.style.backgroundColor = 'transparent';
 
   document.body.appendChild(box);
-};
-
-// Check if the circle is inside the box
-const isInsideBox = (circle, box) => {
-  const circleRect = circle.getBoundingClientRect();
-  const boxRect = box.getBoundingClientRect();
-
-  return (
-    circleRect.left >= boxRect.left + 1 &&
-    circleRect.top >= boxRect.top + 1 &&
-    circleRect.right <= boxRect.right - 1 &&
-    circleRect.bottom <= boxRect.bottom - 1
-  );
 };
