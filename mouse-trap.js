@@ -1,84 +1,64 @@
+// Global variables to keep track of the circles and the box
 let lastCircle = null;
-let box = null;
+const boxSize = 200; // Size of the box (200px x 200px)
 
-// Create a circle at the mouse position on click
-export const createCircle = () => {
-  document.addEventListener('click', (event) => {
-    // Create a new div element
-    const circle = document.createElement('div');
-    circle.className = 'circle';
-    circle.style.backgroundColor = 'white';
+// Function to create a box in the center of the page
+export function setBox() {
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.style.width = `${boxSize}px`;
+    box.style.height = `${boxSize}px`;
+    box.style.position = 'absolute';
+    box.style.top = '50%';
+    box.style.left = '50%';
+    box.style.transform = 'translate(-50%, -50%)';
+    box.style.border = '1px solid black';
+    document.body.appendChild(box);
+}
 
-    // Set its position
-    const radius = 25;
-    circle.style.position = 'absolute';
-    circle.style.left = `${event.clientX - radius}px`; // Adjust to center the circle
-    circle.style.top = `${event.clientY - radius}px`; // Adjust to center the circle
+// Function to create a circle at the mouse click position
+export function createCircle() {
+    document.addEventListener('click', (event) => {
+        const circle = document.createElement('div');
+        circle.className = 'circle';
+        circle.style.backgroundColor = 'white';
+        circle.style.position = 'absolute';
+        circle.style.width = '30px';
+        circle.style.height = '30px';
+        circle.style.borderRadius = '50%';
+        circle.style.top = `${event.clientY - 15}px`; // Center the circle
+        circle.style.left = `${event.clientX - 15}px`; // Center the circle
+        document.body.appendChild(circle);
+        lastCircle = circle; // Keep track of the last created circle
+    });
+}
 
-    // Set size of the circle
-    circle.style.width = `${2 * radius}px`;
-    circle.style.height = `${2 * radius}px`;
-    circle.style.borderRadius = '50%';
-    
-    // Add the circle to the body
-    document.body.appendChild(circle);
+// Function to move the last created circle with the mouse
+export function moveCircle() {
+    document.addEventListener('mousemove', (event) => {
+        if (lastCircle) {
+            const circleRect = lastCircle.getBoundingClientRect();
+            const boxRect = document.querySelector('.box').getBoundingClientRect();
 
-    // Keep track of the last created circle
-    lastCircle = circle;
-  });
-};
+            // Calculate new position
+            let newX = event.clientX - 15; // Center the circle
+            let newY = event.clientY - 15; // Center the circle
 
-// Move the last circle with the mouse
-export const moveCircle = () => {
-  document.addEventListener('mousemove', (event) => {
-    if (lastCircle) {
-      // Get the mouse position
-      const radius = 25;
-      let x = event.clientX - radius;
-      let y = event.clientY - radius;
+            // Check if the circle is within the box boundaries
+            if (
+                newX >= boxRect.left + 1 && 
+                newX + circleRect.width <= boxRect.right - 1 &&
+                newY >= boxRect.top + 1 && 
+                newY + circleRect.height <= boxRect.bottom - 1
+            ) {
+                lastCircle.style.backgroundColor = 'var(--purple)'; // Change color to purple
+            } else {
+                lastCircle.style.backgroundColor = 'white'; // Reset color if outside
+            }
 
-       // Update the circle's position
-       lastCircle.style.left = `${x}px`;
-       lastCircle.style.top = `${y}px`;
-      // Check if the circle is inside the box
-      if (box) {
-        const boxRect = box.getBoundingClientRect();
-        const circleRect = lastCircle.getBoundingClientRect();
-
-        const isInsideX = circleRect.left >= boxRect.left + 1 &&
-                          circleRect.right <= boxRect.right - 1;
-        const isInsideY = circleRect.top >= boxRect.top + 1 &&
-                          circleRect.bottom <= boxRect.bottom - 1;
-
-        if (isInsideX && isInsideY) {
-          lastCircle.style.backgroundColor = 'var(--purple)';
-          // Ensure the circle stays within the box
-          x = Math.max(boxRect.left + radius, Math.min(x, boxRect.right - radius));
-          y = Math.max(boxRect.top + radius, Math.min(y, boxRect.bottom - radius));
-        } else {
-          lastCircle.style.backgroundColor = 'white';
+            // Move the circle
+            lastCircle.style.top = `${newY}px`;
+            lastCircle.style.left = `${newX}px`;
         }
-      }
-
-     
-    }
-  });
-};
-
-// Create a box in the center of the page
-export const setBox = () => {
-  box = document.createElement('div');
-  box.className = 'box';
-
-  // Set box properties
-  box.style.position = 'absolute';
-  box.style.width = '200px';
-  box.style.height = '200px';
-  box.style.left = '50%';
-  box.style.top = '50%';
-  box.style.transform = 'translate(-50%, -50%)';
-  box.style.border = '1px solid black';
-  box.style.backgroundColor = 'transparent';
-
-  document.body.appendChild(box);
-};
+    });
+}
