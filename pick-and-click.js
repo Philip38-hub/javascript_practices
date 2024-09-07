@@ -47,8 +47,12 @@ export function pick() {
 
     // Mouse move event
     document.addEventListener('mousemove', (event) => {
-        const hue = Math.round((event.clientX / window.innerWidth) * 360);
-        const luminosity = Math.round((1 - (event.clientY / window.innerHeight)) * 100);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Calculate hue and luminosity based on mouse position
+        const hue = Math.round((event.clientX / width) * 360);
+        const luminosity = Math.round((1 - (event.clientY / height)) * 100);
 
         // Update background color
         document.body.style.backgroundColor = `hsl(${hue}, 100%, ${luminosity}%)`;
@@ -63,12 +67,12 @@ export function pick() {
         lineX.setAttribute('x1', event.clientX);
         lineX.setAttribute('x2', event.clientX);
         lineX.setAttribute('y1', 0);
-        lineX.setAttribute('y2', window.innerHeight);
+        lineX.setAttribute('y2', height);
 
         lineY.setAttribute('y1', event.clientY);
         lineY.setAttribute('y2', event.clientY);
         lineY.setAttribute('x1', 0);
-        lineY.setAttribute('x2', window.innerWidth);
+        lineY.setAttribute('x2', width);
     });
 
     // Mouse click event to copy HSL value to clipboard
