@@ -20,16 +20,20 @@ function encode(content) {
 function decode(content) {
     return Buffer.from(content, 'base64').toString('utf-8');
 }
-if (action === 'encode'){
-    let encoded = encode(content);
-    let outFile;
-    argv.length === 5 ? outFile=output : outFile='cypher.txt';
-    writeFile(outFile, encoded);
-}
-
-if (action === 'decode'){
-    let decoded = decode(content);
-    let outFile;
-    argv.length === 5 ? outFile=output : outFile='clear.txt';
-    writeFile(outFile, decoded);
-}
+try{
+    if (action === 'encode'){
+        let encoded = encode(content);
+        let outFile;
+        argv.length === 5 ? outFile=output : outFile='cypher.txt';
+        await writeFile(outFile, encoded);
+    } else if (action === 'decode'){
+        let decoded = decode(content);
+        let outFile;
+        argv.length === 5 ? outFile=output : outFile='clear.txt';
+        await writeFile(outFile, decoded);
+    } else {
+        console.log('Invalid action. Use "encode" or "decode"');
+    }
+} catch (error) {
+    console.error("Error during encoding/decoding:", err.message);
+}   
