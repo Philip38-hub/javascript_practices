@@ -16,9 +16,7 @@ const verydisco = (input) => {
         const discoWords = arr.map(makeDisco).join(' ');
 
         // Output the result with emoji
-        console.log(`${discoWords} (🕺🏼)`);
-    } else {
-        console.log('Please provide input');
+        console.log(discoWords);
     }
 };
 
